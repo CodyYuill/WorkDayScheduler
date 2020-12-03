@@ -14,16 +14,27 @@ businessHours.forEach(function(value, i){
     //create the textblock at beggining with associated hour
     var textArea = $('<textarea class="form-control"></textarea>')
     textArea.attr("id", `${value}`);
+    if(window.localStorage.getItem(`#${textArea.attr("id")}`) !== null)
+    {
+        textArea.val(window.localStorage.getItem(`#${textArea.attr("id")}`))
+    }
     newTimeBlock.append(textArea);
     //create the save button on the end
     var saveBtn = $('<button class="btn btn-outline-secondary fa fa-save" type="button" id="button-addon2"></button>');
     saveBtn.data("value", `${value}`);
-    saveBtn.click(function(){
-        var indexToFind = `#${$(this).data("value")}`;
-        var stringToSave = $(`${indexToFind}`).val();
-        window.localStorage.setItem(`${indexToFind}`, stringToSave);
-    });
+    saveBtn.click(saveString);
     newTimeBlock.append(saveBtn);
     //add the thimeblock to the container
     $(".container").append(newTimeBlock);
 });
+
+function saveString()
+{
+    //get the buttons data-value
+    var indexToFind = `#${$(this).data("value")}`;
+    //get the string from the text area with the id the same value
+    // as the buttons data-value 
+    var stringToSave = $(`${indexToFind}`).val();
+    //store it localstorage
+    window.localStorage.setItem(`${indexToFind}`, stringToSave);
+}
