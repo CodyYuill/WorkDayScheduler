@@ -12,9 +12,18 @@ businessHours.forEach(function(value, i){
     //create the input area
     newTimeBlock.append(`<div class="input-group-prepend"><span class="input-group-text">${value}</span></div>`);
     //create the textblock at beggining with associated hour
-    newTimeBlock.append('<textarea class="form-control"></textarea>');
+    var textArea = $('<textarea class="form-control"></textarea>')
+    textArea.attr("id", `${value}`);
+    newTimeBlock.append(textArea);
     //create the save button on the end
-    newTimeBlock.append('<button class="btn btn-outline-secondary fa fa-save" type="button" id="button-addon2"></button>');
+    var saveBtn = $('<button class="btn btn-outline-secondary fa fa-save" type="button" id="button-addon2"></button>');
+    saveBtn.data("value", `${value}`);
+    saveBtn.click(function(){
+        var indexToFind = `#${$(this).data("value")}`;
+        var stringToSave = $(`${indexToFind}`).val();
+        window.localStorage.setItem(`${indexToFind}`, stringToSave);
+    });
+    newTimeBlock.append(saveBtn);
     //add the thimeblock to the container
     $(".container").append(newTimeBlock);
 });
