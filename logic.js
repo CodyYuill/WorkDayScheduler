@@ -2,7 +2,7 @@ var DateTime = luxon.DateTime;
 var Today = DateTime.local().toFormat('MMMM d, yyyy');
 var businessHours = ["9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm"];
 var hours24 = 9; //starting hour is the 9th hour
-$("#todayDate").text(`${Today}`)
+$("#currentDay").text(`${Today}`)
 
 
 // 9 10 11 12 1 2 3 4 5
@@ -11,7 +11,7 @@ businessHours.forEach(function(value, i){
     //create the new div
     var newTimeBlock = $('<div class="input-group row"></div>');
     //create the input area
-    var hourBlock = $(`<div class="input-group-prepend hour"><span class="input-group-text">${value}</span></div>`);
+    var hourBlock = $(`<div class="input-group-prepend hour"><span class="input-group-text time-block">${value}</span></div>`);
     newTimeBlock.append(hourBlock);
     //give a data-hour value to compare to current hour for coloring block
     var inputArea = $('<textarea class="form-control"></textarea>')
