@@ -4,20 +4,20 @@ var businessHours = ["9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", 
 var hours24 = 9; //starting hour is the 9th hour
 $("#currentDay").text(`${Today}`)
 
-
-// 9 10 11 12 1 2 3 4 5
 //create each timeblock
 businessHours.forEach(function(value, i){
     //create the new div
     var newTimeBlock = $('<div class="input-group row"></div>');
-    //create the input area
+    //create and append text area to show hour
     var hourBlock = $(`<div class="input-group-prepend hour"><span class="input-group-text time-block">${value}</span></div>`);
     newTimeBlock.append(hourBlock);
-    //give a data-hour value to compare to current hour for coloring block
+    //create input area
     var inputArea = $('<textarea class="form-control"></textarea>')
+    //give a data-hour value to compare to current hour for coloring block
     inputArea.data("hour", `${hours24}`);
     //increment the data-hour value
     hours24++;
+    //associate a color with each hour based on current time
     if(inputArea.data("hour") > DateTime.local().hour)
     {
         //hour is in future
@@ -33,16 +33,20 @@ businessHours.forEach(function(value, i){
         //hour is in past
         inputArea.addClass("past");
     }
-    //create the textblock at beggining with associated hour
+    //give input area an id to math with local storage for sending and receiving 
     inputArea.attr("id", `${value}`);
+    //check to see if theres anything to grab for localstorage
     if(window.localStorage.getItem(`#${inputArea.attr("id")}`) !== null)
     {
+        //if there is get it and add it to the input area
         inputArea.val(window.localStorage.getItem(`#${inputArea.attr("id")}`))
     }
     newTimeBlock.append(inputArea);
     //create the save button on the end
     var saveBtn = $('<button class="btn btn-outline-secondary fa fa-save saveBtn" type="button" id="button-addon2"></button>');
+    //give save buttons unique identifiers
     saveBtn.data("value", `${value}`);
+    //create on click event for each button
     saveBtn.click(saveString);
     newTimeBlock.append(saveBtn);
     //add the thimeblock to the container
